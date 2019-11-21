@@ -1,4 +1,4 @@
-;;;; Example "Sudoku"
+;;; Example "Sudoku"
 ;;;;
 ;;;; Using Screamer to solve a sudoku puzzle.
 
@@ -128,6 +128,7 @@
 
 (asdf:load-system :cffi)
 
+
 (defpackage :cffi-user
   (:use :common-lisp :cffi))
 (in-package :cffi-user)
@@ -138,3 +139,21 @@
   (t (:default "libcurl")))
 
 (use-foreign-library libcurl)
+(pdefctype curl-code :int)
+
+(defcfun "curl_global_init" curl-code
+  (flags :long))
+
+(url-global-init 0)
+;; 0
+
+
+
+(defcfun *curl_easy_init* :pointer)
+;; *CURL_EASY_INIT*
+
+
+(defcfun *curl_easy_cleanup* :void
+  (easy-handle :pointer))
+;; *CURL_EASY_CLEANUP*
+(defparameter *easy-handle* (*curl-easy-init*))
